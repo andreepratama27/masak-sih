@@ -13,9 +13,9 @@ export const HomeLoader = async () => {
   const result = await networkHandler.get(endpoint.recipes)
   const response = await result.data;
 
-  return defer({
-    response
-  })
+  return {
+    ...response
+  }
 }
 
 function Home() {
@@ -23,18 +23,13 @@ function Home() {
 
   const renderContent = () => {
     return (
-      <Suspense fallback={(<div>Loading...</div>)}>
-        <Await resolve={results}>
-          <Grid>
-            {
-              results?.map((item: Recipe) => (
-                <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
-              ))
-            }
-          </Grid>
-        </Await>
-        
-      </Suspense>
+      <Grid>
+        {
+          results?.map((item: Recipe) => (
+            <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
+          ))
+        }
+      </Grid>
     )
   }
 
