@@ -14,20 +14,20 @@ export const HomeLoader = async () => {
   const response = await result.data;
 
   return defer({
-    data: response?.results
+    response
   })
 }
 
 function Home() {
-  const { data } = useLoaderData() as any;
+  const { results } = useLoaderData() as APIResponse<Recipe[]>;
 
   const renderContent = () => {
     return (
       <Suspense fallback={(<div>Loading...</div>)}>
-        <Await resolve={data}>
+        <Await resolve={results}>
           <Grid>
             {
-              data?.map((item: Recipe) => (
+              results?.map((item: Recipe) => (
                 <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
               ))
             }

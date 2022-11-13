@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import endpoint from '@/lib/api/api.endpoints'
 import networkHandler from '@/lib/api/api.instance'
 
@@ -9,7 +9,7 @@ const getRecipes = () => {
     queryKey: ["recipes"],
     queryFn: () => networkHandler
       .get(endpoint.recipes)
-      .then(res => res.data)
+      .then((res: any) => res.data)
   })
 
   return fetcher
@@ -21,7 +21,7 @@ const getRecipeDetail = (key: string) => {
     queryKey: ["recipes"],
     queryFn: () => networkHandler
       .get(`${endpoint.recipeDetail}/${key}`)
-      .then(res => res.data)
+      .then((res: any) => res.data)
   })
 
   return fetcher
@@ -33,7 +33,7 @@ const getRecipesCategory = () => {
     queryKey: ["categories"],
     queryFn: () => networkHandler
       .get(endpoint.recipesCategory)
-      .then(res => res.data)
+      .then((res: any) => res.data)
   })
 
   return fetcher

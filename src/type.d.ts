@@ -40,5 +40,5 @@ interface RecipeDetails {
 interface APIResponse<T> {
   method: string;
   status: boolean;
-  result: T;
+  results: T;
 }
