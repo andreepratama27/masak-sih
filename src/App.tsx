@@ -1,10 +1,11 @@
-import Home from './pages/Home/index.tsx'
+import { RouterProvider } from 'react-router-dom'
+import routes from './pages/'
 
 function App() {
   return (
-    <>
-      <Home />
-    </>
+    <div className="App">
+      <RouterProvider router={routes} />
+    </div>
   )
 }
 

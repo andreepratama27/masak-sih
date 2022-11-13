@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { styled } from '@stitches/react'
 
 const Card = styled('div', {
@@ -14,7 +15,7 @@ const CardImage = styled('img', {
   objectFit: 'cover',
 })
 
-const CardText = styled('div', {
+const CardText = styled(Link, {
   position: 'absolute',
   bottom: '1rem',
   left: '1rem',

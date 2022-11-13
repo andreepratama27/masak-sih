@@ -1,44 +1,54 @@
-import { getRecipes } from '@/services/recipes'
-import Navbar from '@/components/Navbar'
 import CategoryList from '@/components/CategoryList'
 import Card from '@/components/Card/'
+import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 
 import { Grid } from './styled'
+import { Await, defer, useLoaderData } from 'react-router-dom'
+
+import networkHandler from '@/lib/api/api.instance'
+import endpoint from '@/lib/api/api.endpoints'
+import { Suspense } from 'react'
+
+export const HomeLoader = async () => {
+  const result = await networkHandler.get(endpoint.recipes)
+  const response = await result.data;
+
+  return defer({
+    data: response?.results
+  })
+}
 
 function Home() {
-  const { data, isLoading } = getRecipes();
+  const { data } = useLoaderData() as any;
 
   const renderContent = () => {
-    if (isLoading) {
-      return (
-        <p>Mengambil Resep...</p>
-      )
-    }
-
     return (
-      <Grid>
-        {
-          data?.results?.map((item: Recipe) => (
-            <Card {...item} key={item.key} />
-          ))
-        }
-      </Grid>
+      <Suspense fallback={(<div>Loading...</div>)}>
+        <Await resolve={data}>
+          <Grid>
+            {
+              data?.map((item: Recipe) => (
+                <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
+              ))
+            }
+          </Grid>
+        </Await>
+        
+      </Suspense>
     )
   }
 
   return (
     <div className="App">
-      <Navbar />
-
-      <section className="container max-w-sm mx-auto py-8">
-        <div className='title-container w-1/2'>
+      <section className="container max-w-sm py-8 mx-auto">
+        <div className='w-1/2 title-container'>
           <p className='text-2xl font-bold'>Temukan Resep Terbaik untuk Hari Ini</p>
         </div>
 
-        <div className="search-container py-4 flex gap-8">
-          <input placeholder="Cari Resep" className="w-full bg-gray-200 p-4 rounded" />
-          <div className="toggle p-4 bg-gray-800 rounded">
-            <i className='text-white'>Icon</i>
+        <div className="flex gap-8 py-4 search-container">
+          <input placeholder="Cari Resep" className="w-full p-4 bg-gray-200 rounded" />
+          <div className="flex items-center p-4 bg-gray-800 rounded toggle" role="button">
+            <AdjustmentsHorizontalIcon className='w-4 h-4 text-white' />
           </div>
         </div>
 

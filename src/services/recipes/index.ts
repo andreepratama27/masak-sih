@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import endpoint from '@/lib/api/api.endpoints'
 import networkHandler from '@/lib/api/api.instance'
 
 const getRecipes = () => {
   const fetcher = useQuery({
+    networkMode: 'offlineFirst',
     refetchOnWindowFocus: false,
     queryKey: ["recipes"],
     queryFn: () => networkHandler
@@ -11,10 +12,20 @@ const getRecipes = () => {
       .then(res => res.data)
   })
 
-  return {
-    ...fetcher
-  }
+  return fetcher
 };
+
+const getRecipeDetail = (key: string) => {
+  const fetcher = useQuery({
+    refetchOnWindowFocus: false,
+    queryKey: ["recipes"],
+    queryFn: () => networkHandler
+      .get(`${endpoint.recipeDetail}/${key}`)
+      .then(res => res.data)
+  })
+
+  return fetcher
+}
 
 const getRecipesCategory = () => {
   const fetcher = useQuery({
@@ -25,10 +36,11 @@ const getRecipesCategory = () => {
       .then(res => res.data)
   })
 
-  return { ...fetcher }
+  return fetcher
 }
 
 export {
   getRecipes,
+  getRecipeDetail,
   getRecipesCategory,
 }

@@ -1,8 +1,25 @@
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isRoot = location.pathname === '/'
+
+  const navigateBack = () => {
+    navigate('/')
+  }
+
   return (
-    <nav className='bg-blue-500 p-4 w-full border-0 sticky top-0 z-10'>
-      <div className='navbar-container max-w-sm mx-auto'>
-        <p className='text-white font-bold text-lg text-center'>Masak Sih?</p>
+    <nav className='sticky top-0 z-10 w-full p-4 bg-blue-500 border-0'>
+      <div className='relative flex items-center justify-center max-w-sm mx-auto navbar-container'>
+        {!isRoot && (
+          <div className="absolute left-0 back-button" role="button" onClick={navigateBack}>
+            <ArrowLeftIcon className='w-4 h-4 text-white' />
+          </div>
+        )}
+        
+        <p className='text-lg font-bold text-white'>Masak Sih?</p>
       </div>
     </nav>
   )
