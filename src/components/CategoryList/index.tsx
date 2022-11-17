@@ -15,7 +15,7 @@ const CategoryList: React.FC<CategoryListProps> = (props) => {
   }
 
   return (
-    <div className='mt-4 overflow-auto categories-container'>
+    <div className='mt-4 overflow-y-auto categories-container'>
       <ul className='flex gap-4'>
         {
           data?.results?.map((item: Category, key: string) => (

@@ -1,5 +1,7 @@
-import { LoaderFunctionArgs, useLoaderData, useParams } from "react-router-dom";
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
+import React from 'react'
+import Tag from '@/components/Tag'
+import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import { ChevronDownIcon, UserIcon } from '@heroicons/react/24/outline'
 
 import networkHandler from '@/lib/api/api.instance'
 import endpoint from '@/lib/api/api.endpoints'
@@ -35,20 +37,17 @@ const RecipeDetail = () => {
           <p className="mt-2 text-lg font-bold">{results?.title}</p>
 
           <div className="flex justify-between py-2 author">
-            <p className='text-sm'>{results?.author?.user}</p>
+            <div className='flex gap-2'>
+              <UserIcon className='w-4 h-4' />
+              <p className='text-sm'>{results?.author?.user}</p>
+            </div>
             <p className="text-sm">{results?.author?.datePublished}</p>
           </div>
 
           <div className="flex gap-2 level">
-            <div className="p-1 px-2 text-center bg-green-500 rounded whitespace-nowrap">
-              <p className='text-sm text-white'>{results?.difficulty}</p>
-            </div>
-            <div className="p-1 px-2 text-center bg-green-500 rounded whitespace-nowrap">
-              <p className='text-sm text-white'>{results?.servings}</p>
-            </div>
-            <div className="flex items-center px-2 text-center bg-green-500 rounded whitespace-nowrap">
-              <p className='text-sm text-white'>{results?.times}</p>
-            </div>
+            <Tag text={results?.difficulty} />
+            <Tag text={results?.servings} />
+            <Tag text={results?.times} />
           </div>
         </div>
       </section>
@@ -70,13 +69,13 @@ const RecipeDetail = () => {
           <ul className="mt-4">
             {
               results?.ingredient
-              ?.map((item: string, key: number) => (
-                <li className='mb-2' key={key}>
-                  <div className="w-full rounded">
-                    - {item}
-                  </div>
-                </li>
-              ))
+                ?.map((item: string, key: number) => (
+                  <li className='mb-2' key={key}>
+                    <div className="w-full rounded">
+                      - {item}
+                    </div>
+                  </li>
+                ))
             }
           </ul>
         </div>
@@ -87,12 +86,12 @@ const RecipeDetail = () => {
 
         {
           results?.needItem?.map((item, key: number) => (
-              <div className='flex items-center gap-4 mt-4' key={key}>
-                <div className="w-20 h-20 rounded">
-                  <img src={item.thumb_item} alt={item.item_name} className="object-contain w-full h-full" />
-                </div>
-                <p>{item.item_name}</p>
+            <div className='flex items-center gap-4 mt-4' key={key}>
+              <div className="w-20 h-20 rounded">
+                <img src={item.thumb_item} alt={item.item_name} className="object-contain w-full h-full" />
               </div>
+              <p>{item.item_name}</p>
+            </div>
           ))
         }
 
@@ -119,7 +118,7 @@ const RecipeDetail = () => {
             }
           </ul>
         </div>
-        
+
       </section>
     </div>
   )

@@ -30,7 +30,7 @@ const CardOverlay = styled('div', {
   top: 0,
   left: 0,
   borderRadius: '0.25rem',
-  opacity: 0.7
+  opacity: 0.5
 })
 
 export {

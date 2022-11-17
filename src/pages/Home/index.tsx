@@ -1,13 +1,13 @@
+import React from 'react'
 import CategoryList from '@/components/CategoryList'
 import Card from '@/components/Card/'
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 
 import { Grid } from './styled'
-import { Await, defer, useLoaderData } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 
 import networkHandler from '@/lib/api/api.instance'
 import endpoint from '@/lib/api/api.endpoints'
-import { Suspense } from 'react'
 
 export const HomeLoader = async () => {
   const result = await networkHandler.get(endpoint.recipes)
