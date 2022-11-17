@@ -28,6 +28,8 @@ const RecipeDetail = () => {
     )
   }
 
+  console.log('fff', results)
+
   return (
     <div className="max-w-sm py-8 mx-auto">
       <section className="content">
