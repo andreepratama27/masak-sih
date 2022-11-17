@@ -1,4 +1,3 @@
-import React from 'react'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { regenerateSlug } from '@/lib/utils'

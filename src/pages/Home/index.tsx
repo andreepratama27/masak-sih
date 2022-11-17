@@ -1,4 +1,3 @@
-import React from 'react'
 import CategoryList from '@/components/CategoryList'
 import Card from '@/components/Card/'
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'

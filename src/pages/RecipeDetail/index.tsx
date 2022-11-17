@@ -1,4 +1,3 @@
-import React from 'react'
 import Tag from '@/components/Tag'
 import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import { ChevronDownIcon, UserIcon } from '@heroicons/react/24/outline'
