@@ -1,6 +1,9 @@
 import Tag from '@/components/Tag'
+import Expander from '@/components/Expander'
+import Panel from '@/components/Panel'
+
 import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
-import { ChevronDownIcon, UserIcon } from '@heroicons/react/24/outline'
+import { UserIcon, ClockIcon, CircleStackIcon } from '@heroicons/react/24/outline'
 
 import networkHandler from '@/lib/api/api.instance'
 import endpoint from '@/lib/api/api.endpoints'
@@ -16,18 +19,15 @@ export const RecipeDetailLoader = async ({ params }: LoaderFunctionArgs) => {
   }
 }
 
+
 const RecipeDetail = () => {
   const { results } = useLoaderData() as APIResponse<RecipeDetails>;
 
   const renderDescription = (desc: string) => {
     return (
-      <div>
-        {desc?.slice(0, 400)}... <i className='text-blue-500 text-small'>Lanjutkan</i>
-      </div>
+      <Expander content={desc} />
     )
   }
-
-  console.log('fff', results)
 
   return (
     <div className="max-w-sm py-8 mx-auto">
@@ -46,9 +46,8 @@ const RecipeDetail = () => {
           </div>
 
           <div className="flex gap-2 level">
-            <Tag text={results?.difficulty} />
-            <Tag text={results?.servings} />
-            <Tag text={results?.times} />
+            <Tag text={results.times} icon={<ClockIcon className='w-4 h-4 text-white' />} />
+            <Tag text={results.servings} icon={<CircleStackIcon className='w-4 h-4 text-white' />} />
           </div>
         </div>
       </section>
@@ -60,13 +59,7 @@ const RecipeDetail = () => {
           </p>
         </div>
 
-        <div className="py-4 content-menu_ingredients">
-          <div className="flex items-center justify-between panel">
-            <p className="text-lg font-bold title">Bahan - Bahan</p>
-
-            <ChevronDownIcon className="w-4 h-4" />
-          </div>
-
+        <Panel title="Bahan - Bahan">
           <ul className="mt-4">
             {
               results?.ingredient
@@ -79,30 +72,25 @@ const RecipeDetail = () => {
                 ))
             }
           </ul>
-        </div>
+        </Panel>
 
-        <div className="content-menu_additional">
-          <p className="text-lg font-bold">Bahan Wajib</p>
-        </div>
+        <Panel title="Bahan Wajib">
+          <>
 
-        {
-          results?.needItem?.map((item, key: number) => (
-            <div className='flex items-center gap-4 mt-4' key={key}>
-              <div className="w-20 h-20 rounded">
-                <img src={item.thumb_item} alt={item.item_name} className="object-contain w-full h-full" />
-              </div>
-              <p>{item.item_name}</p>
-            </div>
-          ))
-        }
+            {
+              results?.needItem?.map((item, key: number) => (
+                <div className='flex items-center gap-4 mt-4' key={key}>
+                  <div className="w-20 h-20 rounded">
+                    <img src={item.thumb_item} alt={item.item_name} className="object-contain w-full h-full" />
+                  </div>
+                  <p>{item.item_name}</p>
+                </div>
+              ))
+            }
+          </>
+        </Panel>
 
-        <div className="py-4 mt-4 content-menu_ingredients">
-          <div className="flex items-center justify-between panel">
-            <p className="text-lg font-bold title">Cara Penyajian</p>
-
-            <ChevronDownIcon className="w-4 h-4" />
-          </div>
-
+        <Panel title="Cara Penyajian">
           <ul className="mt-4">
             {
               results?.step
@@ -118,7 +106,7 @@ const RecipeDetail = () => {
                 ))
             }
           </ul>
-        </div>
+        </Panel>
 
       </section>
     </div>

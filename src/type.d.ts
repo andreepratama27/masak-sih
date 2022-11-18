@@ -1,5 +1,5 @@
 type Recipe = {
-  key?: string;
+  key: string;
   recipeKey: string;
   title: string;
   difficulty: string;
