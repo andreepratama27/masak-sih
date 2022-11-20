@@ -10,7 +10,7 @@ import { Grid } from './styled'
 import networkHandler from '@/lib/api/api.instance'
 import endpoint from '@/lib/api/api.endpoints'
 
-export const HomeLoader = async (page: number) => {
+export const HomeLoader = async (page?: number = 0) => {
   try {
     const result = await networkHandler.get(`${endpoint.recipes}/${page}`)
     const response = await result.data.results;
@@ -22,25 +22,31 @@ export const HomeLoader = async (page: number) => {
 }
 
 function Home() {
+  const [pageParam, setPageParam] = useState(1)
   const { ref, inView } = useInView()
-  
-  const [page, setPage] = useState(1)
-  
-  const { data, error, isLoading } = useInfiniteQuery(
+
+  const { data, error, isLoading, fetchNextPage } = useInfiniteQuery(
     ['recipes'],
-    () => HomeLoader(page),
+    async () => {
+      const result = await networkHandler.get(`${endpoint.recipes}/${pageParam}`)
+      const response = await result.data
+
+      return { ...response, page: pageParam }
+    },
     {
-      getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined, 
-      getNextPageParam: (lastPage) => lastPage.nextId ?? undefined
+      getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
+      getNextPageParam: (lastPage) => {
+        return lastPage.page
+      },
     }
   )
 
   const renderContent = () => {
     return (
       <Grid>
-        {data?.pages?.map((page) => (
-          <React.Fragment key={page.nextId}>
-            {page?.map((item: Recipe) => (
+        {data?.pages?.map((page, key) => (
+          <React.Fragment key={key}>
+            {page?.results?.map((item: Recipe) => (
               <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
             ))}
           </React.Fragment>
@@ -51,11 +57,14 @@ function Home() {
 
 
   useEffect(() => {
-    if (inView) setPage(page + 1)
+    if (inView) {
+      setPageParam(pageParam + 1)
+      fetchNextPage()
+    }
   }, [inView])
 
   if (error) return null;
-  
+
   return (
     <div className="App">
       <section className="container max-w-sm py-8 mx-auto">
