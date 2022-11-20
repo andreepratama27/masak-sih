@@ -6,14 +6,14 @@ import {
 
 import Root from './Root'
 import Home from './Home'
-import RecipeDetail from './RecipeDetail'
+import RecipeDetail, { RecipeDetailLoader } from './RecipeDetail'
 import Error from './Error'
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Root />} path='/' errorElement={<Error />}>
       <Route element={<Home />} path='/' />
-      <Route element={<RecipeDetail />} path='/recipe-detail/:key' />
+      <Route element={<RecipeDetail />} loader={RecipeDetailLoader} path='/recipe-detail/:key' />
     </Route>
   )
 )
