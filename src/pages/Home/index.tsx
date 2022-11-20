@@ -34,6 +34,8 @@ function Home() {
       return { ...response, page: pageParam }
     },
     {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
       getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
       getNextPageParam: (lastPage) => {
         return lastPage.page
