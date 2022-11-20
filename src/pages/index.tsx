@@ -5,15 +5,15 @@ import {
 } from 'react-router-dom'
 
 import Root from './Root'
-import Home, { HomeLoader } from './Home'
-import RecipeDetail, { RecipeDetailLoader } from './RecipeDetail'
+import Home from './Home'
+import RecipeDetail from './RecipeDetail'
 import Error from './Error'
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Root />} path='/' errorElement={<Error />}>
-      <Route element={<Home />} loader={HomeLoader} path='/' />
-      <Route element={<RecipeDetail />} loader={RecipeDetailLoader} path='/recipe-detail/:key' />
+      <Route element={<Home />} path='/' />
+      <Route element={<RecipeDetail />} path='/recipe-detail/:key' />
     </Route>
   )
 )

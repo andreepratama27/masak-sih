@@ -1,37 +1,61 @@
-import CategoryList from '@/components/CategoryList'
-import Card from '@/components/Card/'
+import React, { useState, useEffect } from 'react'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInView } from 'react-intersection-observer'
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 
+import CategoryList from '@/components/CategoryList'
+import Card from '@/components/Card/'
 import { Grid } from './styled'
-import { useLoaderData } from 'react-router-dom'
 
 import networkHandler from '@/lib/api/api.instance'
 import endpoint from '@/lib/api/api.endpoints'
 
-export const HomeLoader = async () => {
-  const result = await networkHandler.get(endpoint.recipes)
-  const response = await result.data;
+export const HomeLoader = async (page: number) => {
+  try {
+    const result = await networkHandler.get(`${endpoint.recipes}/${page}`)
+    const response = await result.data.results;
 
-  return {
-    ...response
+    return response
+  } catch (err) {
+    console.error(err)
   }
 }
 
 function Home() {
-  const { results } = useLoaderData() as APIResponse<Recipe[]>;
+  const { ref, inView } = useInView()
+  
+  const [page, setPage] = useState(1)
+  
+  const { data, error, isLoading } = useInfiniteQuery(
+    ['recipes'],
+    () => HomeLoader(page),
+    {
+      getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined, 
+      getNextPageParam: (lastPage) => lastPage.nextId ?? undefined
+    }
+  )
 
   const renderContent = () => {
     return (
       <Grid>
-        {
-          results?.map((item: Recipe) => (
-            <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
-          ))
-        }
+        {data?.pages?.map((page) => (
+          <React.Fragment key={page.nextId}>
+            {page?.map((item: Recipe) => (
+              <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
+            ))}
+          </React.Fragment>
+        ))}
       </Grid>
     )
   }
 
+
+  useEffect(() => {
+    if (inView) setPage(page + 1)
+  }, [inView])
+
+  if (error) return null;
+  
   return (
     <div className="App">
       <section className="container max-w-sm py-8 mx-auto">
@@ -49,6 +73,8 @@ function Home() {
         <CategoryList />
 
         {renderContent()}
+
+        {!isLoading && <button ref={ref}>Load More</button>}
       </section>
     </div>
   )

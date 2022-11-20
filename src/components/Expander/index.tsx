@@ -4,7 +4,7 @@ const Expander = ({ content }: { content: string }) => {
   const [text, setText] = useState<string>('')
 
   useEffect(() => {
-    if (content.length > 400) {
+    if (content?.length > 400) {
       setText(content.slice(0, 400))
       return;
     }
@@ -13,7 +13,7 @@ const Expander = ({ content }: { content: string }) => {
   }, [content])
 
   const renderToggler = () => {
-    if (text.length > 400) return;
+    if (text?.length > 400) return;
 
     return (
       <>
