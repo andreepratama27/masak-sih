@@ -3,14 +3,17 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 
-import CategoryList from '@/components/CategoryList'
+//import CategoryList from '@/components/CategoryList'
 import Card from '@/components/Card/'
 import { Grid } from './styled'
+import Spinner from '@/components/Spinner'
+
+const CategoryList = React.lazy(() => import('@/components/CategoryList'))
 
 import networkHandler from '@/lib/api/api.instance'
 import endpoint from '@/lib/api/api.endpoints'
 
-export const HomeLoader = async (page?: number = 0) => {
+export const HomeLoader = async (page: number = 0) => {
   try {
     const result = await networkHandler.get(`${endpoint.recipes}/${page}`)
     const response = await result.data.results;
@@ -44,6 +47,8 @@ function Home() {
   )
 
   const renderContent = () => {
+    if (isLoading) return <Spinner ref={ref} />
+
     return (
       <Grid>
         {data?.pages?.map((page, key) => (
@@ -81,11 +86,17 @@ function Home() {
           </div>
         </div>
 
-        <CategoryList />
+        <React.Suspense>
+          <CategoryList />
+        </React.Suspense>
 
         {renderContent()}
 
-        {!isLoading && <button ref={ref}>Load More</button>}
+        {
+          !isLoading && (
+            <Spinner ref={ref} />
+          )
+        }
       </section>
     </div>
   )

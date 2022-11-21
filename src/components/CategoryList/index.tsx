@@ -10,7 +10,14 @@ const CategoryList: React.FC<CategoryListProps> = (props) => {
 
   if (isLoading) {
     return (
-      <p>Mengambil Kategori...</p>
+      <div className='mt-4 flex gap-4'>
+        {
+          Array(3).fill('')
+            .map(() => (
+              <div className='w-full p-4 rounded bg-gray-200 animate-pulse' />
+            ))
+        }
+      </div>
     )
   }
 
