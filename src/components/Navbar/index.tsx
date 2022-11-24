@@ -13,7 +13,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className='sticky top-0 z-10 w-full p-4 bg-blue-500 border-0'>
+    <nav className='sticky top-0 z-20 w-full p-4 bg-blue-500 border-0'>
       <div className='relative flex items-center justify-center max-w-sm mx-auto navbar-container'>
         {isRoot ? (
           <p className='text-lg font-bold text-white'>Masak Sih?</p>

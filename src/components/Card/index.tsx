@@ -6,8 +6,8 @@ import { BookmarkIcon, ClockIcon, CircleStackIcon } from '@heroicons/react/24/ou
 const Card: React.FC<Recipe> = (props) => {
   return (
     <CardWrapper role="button">
-      <div className='absolute top-2 right-2 bg-black p-2 hover:cursor-pointer rounded w-10 h-10'>
-        <BookmarkIcon className='w-full h-full text-white' />
+      <div className='absolute top-2 right-2 bg-black hover:bg-white p-2 hover:cursor-pointer rounded w-10 h-10 z-10'>
+        <BookmarkIcon className='w-full h-full text-white hover:text-gray-800' />
       </div>
 
       <CardImage src={props.thumb} alt={props.title} />
