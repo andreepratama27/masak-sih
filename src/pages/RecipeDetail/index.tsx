@@ -1,6 +1,8 @@
-import Tag from '@/components/Tag'
-import Expander from '@/components/Expander'
-import Panel from '@/components/Panel'
+import {
+  Tag,
+  Panel,
+  Expander,
+} from '@/components'
 
 import { LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import { UserIcon, ClockIcon, CircleStackIcon } from '@heroicons/react/24/outline'
