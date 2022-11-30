@@ -10,8 +10,7 @@ import {
 } from '@/components'
 import { Grid } from './styled'
 
-import networkHandler from '@/lib/api/api.instance'
-import endpoint from '@/lib/api/api.endpoints'
+import { getRecipes } from '@/lib/api/api.endpoints'
 
 function Home() {
   const [pageParam, setPageParam] = useState(1)
@@ -20,7 +19,9 @@ function Home() {
   const { data, error, isLoading, fetchNextPage } = useInfiniteQuery(
     ['recipes'],
     async () => {
-      const result = await networkHandler.get(`${endpoint.recipes}/${pageParam}`)
+      const result = await getRecipes({
+        pageParam,
+      })
       const response = await result.data
 
       return { ...response, page: pageParam }
@@ -65,11 +66,11 @@ function Home() {
     <div className="App">
       <section className="container max-w-sm py-8 mx-auto">
         <div className='w-1/2 title-container'>
-          <p className='text-2xl font-bold'>Temukan Resep Terbaik untuk Hari Ini</p>
+          <p className='text-2xl font-bold'>Temukan Resep Terbaik untuk Hari Ini.</p>
+          <div className='w-24 h-2 bg-yellow-300' />
         </div>
 
-        <SearchWidget />
-        
+        {/* <SearchWidget /> */}
         <CategoryList />
 
         {renderContent()}

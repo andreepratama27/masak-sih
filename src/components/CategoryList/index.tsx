@@ -1,4 +1,5 @@
 import React from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useAtom } from 'jotai'
 import classNames from 'classnames'
@@ -6,14 +7,20 @@ import { getRecipesCategory } from '@/services/recipes'
 import { generateSlug } from '@/lib/utils'
 
 import { CategoryAtom } from '@/store'
+import { getRecipeCategories } from '@/lib/api/api.endpoints'
 
 interface CategoryListProps { }
 
-const CategoryList: React.FC<CategoryListProps> = (props) => {
+const CategoryList: React.FC<CategoryListProps> = () => {
   const navigate = useNavigate()
   const [category, setCategory] = useAtom(CategoryAtom);
 
-  const { data, isLoading } = getRecipesCategory();
+  const { data, isLoading } = useQuery(['categories'], async () => {
+    const result = await getRecipeCategories()
+    const response = await result.data
+
+    return response
+  })
 
   const onCategoryClick = (item: string) => {
     navigate(`/recipe-category/${generateSlug(item)}`)
@@ -24,7 +31,7 @@ const CategoryList: React.FC<CategoryListProps> = (props) => {
       <div className='mt-4 flex gap-4'>
         {
           Array(3).fill('')
-          .map((_, key: number) => (
+            .map((_, key: number) => (
               <div className='w-full p-4 rounded bg-gray-200 animate-pulse' key={key} />
             ))
         }
@@ -40,10 +47,10 @@ const CategoryList: React.FC<CategoryListProps> = (props) => {
             <p className={classNames({ 'text-white': category === 'All', 'text-gray-800': category !== 'All' })}>Semua Kategori</p>
           </div>
         </li>
-          
+
         {
           data?.results?.map((item: Category, key: string) => (
-          <li className='whitespace-nowrap' key={key} role="button" onClick={() => onCategoryClick(item.category)}>
+            <li className='whitespace-nowrap' key={key} role="button" onClick={() => onCategoryClick(item.category)}>
               <div className={classNames('p-2 px-4 rounded hover:cursor-pointer', { 'bg-blue-500': item.category === category, 'bg-gray-200': item.category !== category })} role="button" onClick={() => setCategory(item.category)}>
                 <p className={classNames({ 'text-white': item.category === category, 'text-gray-800': item.category !== category })}>{item.category}</p>
               </div>
