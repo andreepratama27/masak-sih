@@ -5,7 +5,6 @@ import { useInView } from 'react-intersection-observer'
 import {
   Card,
   Spinner,
-  SearchWidget,
   CategoryList
 } from '@/components'
 import { Grid } from './styled'
@@ -36,6 +35,10 @@ function Home() {
     }
   )
 
+  const onBookmarked = (item: Recipe) => {
+    console.log('fff', item)
+  }
+
   const renderContent = () => {
     if (isLoading) return <Spinner ref={ref} />
 
@@ -44,7 +47,7 @@ function Home() {
         {data?.pages?.map((page, key) => (
           <React.Fragment key={key}>
             {page?.results?.map((item: Recipe) => (
-              <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
+              <Card {...{ ...item, recipeKey: item.key }} key={item.key} onBookmarked={onBookmarked} />
             ))}
           </React.Fragment>
         ))}
@@ -70,11 +73,8 @@ function Home() {
           <div className='w-24 h-2 bg-yellow-300' />
         </div>
 
-        {/* <SearchWidget /> */}
         <CategoryList />
-
         {renderContent()}
-
         {
           !isLoading && (
             <Spinner ref={ref} />

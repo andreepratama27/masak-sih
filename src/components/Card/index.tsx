@@ -3,11 +3,15 @@ import Tag from '@/components/Tag'
 import { Card as CardWrapper, CardImage, CardOverlay, CardText } from './styled'
 import { BookmarkIcon, ClockIcon, CircleStackIcon } from '@heroicons/react/24/outline'
 
-const Card: React.FC<Recipe> = (props) => {
+interface CardProps extends Recipe {
+  onBookmarked?: (props: any) => void;
+}
+
+const Card: React.FC<CardProps> = ({ onBookmarked, ...props }) => {
   return (
     <CardWrapper role="button">
       <div className='absolute top-2 right-2 bg-black hover:bg-white p-2 hover:cursor-pointer rounded w-10 h-10 z-10'>
-        <BookmarkIcon className='w-full h-full text-white hover:text-gray-800' />
+        <BookmarkIcon className='w-full h-full text-white hover:text-gray-800' onClick={() => onBookmarked(props)} role='button' />
       </div>
 
       <CardImage src={props.thumb} alt={props.title} />
