@@ -32,11 +32,14 @@ const Search = () => {
     } 
     
     return (
-      <Grid>
-        {data?.results?.map((item: Recipe) => (
-          <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
-        ))}
-      </Grid>
+      <>
+        <p className='font-semi italic'>Menemukan <strong>{data?.results?.length}</strong> resep dengan kata kunci <strong className='text-yellow-500'>`{search}`</strong></p>
+        <Grid>
+          {data?.results?.map((item: Recipe) => (
+            <Card {...{ ...item, recipeKey: item.key }} key={item.key} />
+          ))}
+        </Grid>
+      </>
     )
   }
 
@@ -45,7 +48,7 @@ const Search = () => {
   }
 
   return (
-    <div className='container max-w-sm py-8 mx-auto'>
+    <div className='container max-w-sm py-6 mx-auto'>
       {renderContent()}
     </div>
   )
