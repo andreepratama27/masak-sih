@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/andreepratama27/masak-sih/compare/v0.0.1...v0.0.2) (2023-03-14)
+
+
+### Features
+
+* add search page feature ([53fb3c6](https://github.com/andreepratama27/masak-sih/commit/53fb3c631e82334900d9771b885d89509881891c))
+* add standard version ([4e24b6d](https://github.com/andreepratama27/masak-sih/commit/4e24b6d19d2714f9038fe05960e4f1ca197d7317))
+* add store and add recipe category page ([ebc8182](https://github.com/andreepratama27/masak-sih/commit/ebc818288f6eb386b38c4c2856d5dce034c45afe))
+* on hover fav button, change background ([10bf6bf](https://github.com/andreepratama27/masak-sih/commit/10bf6bfedef358517f311f5eebfd2ce5a8a30513))
+
+
+### Bug Fixes
+
+* modify homepage and remove search ([95ca487](https://github.com/andreepratama27/masak-sih/commit/95ca487fbf55e3ee8921f00a3a1b49aaeb30212e))
+* update search result notation ([622f0a7](https://github.com/andreepratama27/masak-sih/commit/622f0a72c86982a3fb7f96a9c0c9d223796b0386))
+
 ### 0.0.1 (2022-11-21)
 
 
