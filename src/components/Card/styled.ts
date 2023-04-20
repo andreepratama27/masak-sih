@@ -5,13 +5,13 @@ const Card = styled('div', {
   width: '100%',
   height: '24rem',
   position: 'relative',
-  borderRadius: '0.25rem',
+  // borderRadius: '0.25rem',
 });
 
 const CardImage = styled('img', {
   width: '100%',
   height: '100%',
-  borderRadius: '0.25rem',
+  // borderRadius: '0.25rem',
   objectFit: 'cover',
 })
 
@@ -29,7 +29,7 @@ const CardOverlay = styled('div', {
   position: 'absolute',
   top: 0,
   left: 0,
-  borderRadius: '0.25rem',
+  // borderRadius: '0.25rem',
   opacity: 0.5
 })
 

@@ -13,7 +13,7 @@ const Tag: React.FC<TagProps> = ({ text, icon: Icon }) => {
   }
 
   return (
-    <div className='p-1 px-2 flex items-center gap-2 text-center bg-green-500 rounded whitespace-nowrap'>
+    <div className='p-1 px-2 flex items-center gap-2 text-center border border-black bg-green-500 whitespace-nowrap'>
       {renderIcon()}
       <p className='text-sm text-white'>{text}</p>
     </div>

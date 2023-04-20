@@ -1,22 +1,21 @@
-import handler from '@/lib/api/api.instance'
+import handler from "@/lib/api/api.instance";
 
 const endpoints = {
-  recipes: '/api/recipes',
-  recipeDetail: '/api/recipe',
-  recipesCategory: '/api/category/recipes',
-  searchRecipe: '/api/search'
+  recipes: "/api/recipes",
+  recipeDetail: "/api/recipe",
+  recipesCategory: "/api/category/recipes",
+  searchRecipe: "/api/search",
 };
 
 export const getRecipes = ({ pageParam }: { pageParam: number }) =>
-  handler.get(endpoints.recipes + `/${pageParam}`)
+  handler.get(endpoints.recipes + `/${pageParam}`);
 
-export const getRecipeCategories = () =>
-  handler.get(endpoints.recipesCategory)
+export const getRecipeCategories = () => handler.get(endpoints.recipesCategory);
 
 export const getRecipeDetail = (key: string) =>
-  handler.get(endpoints.recipeDetail + `/${key}`)
+  handler.get(endpoints.recipeDetail + `/${key}`);
 
 export const searchRecipe = ({ item }: { item: string }) =>
-  handler.get(endpoints.searchRecipe + `?q=${item}`)
+  handler.get(endpoints.searchRecipe + `?s=${item}`);
 
-export default endpoints
+export default endpoints;
